@@ -1,12 +1,12 @@
 [Unit]
-Description=OpenSSH server daemon
-After=syslog.target network.target auditd.service
+Description=Radeon power settings
+After=localfs.target syslog.target
 
 [Service]
-EnvironmentFile=/etc/sysconfig/sshd
-ExecStartPre=/usr/sbin/sshd-keygen
-ExecStart=/usr/sbin/sshd -D $OPTIONS
-ExecReload=/bin/kill -HUP $MAINPID
+Type=oneshot
+ExecStart=/usr/bin/radeonhd-power low
+ExecStop=/usr/bin/radeonhd-power
+RemainAfterExit=yes
 
 [Install]
 WantedBy=graphical.target
