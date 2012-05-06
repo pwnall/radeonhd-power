@@ -1,0 +1,31 @@
+#!/bin/sh
+
+method_file="/sys/class/drm/card0/device/power_method"
+profile_file="/sys/class/drm/card0/device/power_profile"
+
+if [ ! -f $method_file ] || [ ! -f $profile_file ]; then
+	echo "Your system does not appear to have the RadeonHD drivers installed."
+	exit 1
+fi
+
+if [ ! -w $method_file ] || [ ! -w $profile_file ]; then
+	echo "You can't write to sysfs. Try using sudo."
+  exit 1
+fi
+
+if [ $1 == '--help' ]; then
+  echo "Configures the RadeonHD open-source driver's power management."
+	echo "Usage:"
+	echo "    $0 [low|med|high|dynamic]"
+	echo ""
+	echo "By default, the power saving mode is set to dynamic."
+	echo ""
+	exit 0
+fi
+
+if [ -z $1 ] || [ $1 == "dynamic" ]; then
+	echo dynpm > $method_file
+else
+	echo profile > $method_file
+	echo $1 > $profile_file
+fi
