@@ -1,5 +1,6 @@
 [Unit]
-Description=Radeon power settings
+Description=Power saving settings for the radeon X.org video driver
+Documentation=http://github.com/pwnall/radeonhd-power
 After=localfs.target syslog.target
 
 [Service]
